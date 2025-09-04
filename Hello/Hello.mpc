@@ -1,0 +1,29 @@
+project(*idl): dcps {
+  TypeSupport_Files {
+    Basic_Message.idl
+  }
+  custom_only = 1
+}
+
+project(*Publisher): dcpsexe {
+  exename   = publisher
+  after    += *idl
+  Source_Files {
+    Publisher.cpp
+  }
+  IDL_Files {
+    Basic_Message.idl
+  }
+}
+
+project(*Subscriber): dcpsexe {
+  exename   = subscriber
+  after    += *idl
+  Source_Files {
+    Subscriber.cpp
+    DataReaderListener.cpp
+  }
+  IDL_Files {
+    Basic_Message.idl
+  }
+}

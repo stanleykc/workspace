@@ -1,0 +1,30 @@
+#ifndef HELLO_EXPORT_H
+#define HELLO_EXPORT_H
+
+#include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (HELLO_HAS_DLL)
+#  define HELLO_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && HELLO_HAS_DLL */
+
+#if !defined (HELLO_HAS_DLL)
+#  define HELLO_HAS_DLL 1
+#endif /* ! HELLO_HAS_DLL */
+
+#if defined (HELLO_HAS_DLL) && (HELLO_HAS_DLL == 1)
+#  if defined (HELLO_BUILD_DLL)
+#    define Hello_Export ACE_Proper_Export_Flag
+#    define HELLO_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
+#    define HELLO_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
+#  else /* HELLO_BUILD_DLL */
+#    define Hello_Export ACE_Proper_Import_Flag
+#    define HELLO_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
+#    define HELLO_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
+#  endif /* HELLO_BUILD_DLL */
+#else /* HELLO_HAS_DLL == 1 */
+#  define Hello_Export
+#  define HELLO_SINGLETON_DECLARATION(T)
+#  define HELLO_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
+#endif /* HELLO_HAS_DLL == 1 */
+
+#endif /* HELLO_EXPORT_H */

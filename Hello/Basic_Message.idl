@@ -1,0 +1,5 @@
+module Hello {
+  struct Basic_Message {
+    string message;
+  };
+};
