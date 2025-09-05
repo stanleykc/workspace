@@ -4,3 +4,7 @@
 /FileSync
 /OpenDDS
 .DS_Store
+
+# Ignore install directories (generated files)
+install/
+**/install/
