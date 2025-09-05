@@ -1,0 +1,13 @@
+/*
+ * Distributed under the OpenDDS License.
+ * See: http://www.opendds.org/license.html
+ */
+
+module Hello {
+
+  @topic
+  struct Basic_Message {
+    @key long message_id;
+    string text;
+  };
+};

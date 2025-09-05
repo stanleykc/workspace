@@ -9,7 +9,7 @@
 #ifdef OPENDDS_IDL_FILE_SPECIFIC
 #  undef OPENDDS_IDL_FILE_SPECIFIC
 #endif
-#define OPENDDS_IDL_FILE_SPECIFIC(base, index) opendds_idl_generated_basic_messagetypesupportimpl_cpp_l9dnlh##_##base##index
+#define OPENDDS_IDL_FILE_SPECIFIC(base, index) opendds_idl_generated_basic_messagetypesupportimpl_cpp_55v4xr##_##base##index
 
 
 

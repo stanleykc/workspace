@@ -1,0 +1,183 @@
+/*
+ *
+ *
+ * Distributed under the OpenDDS License.
+ * See: http://www.opendds.org/license.html
+ */
+
+#include "Boilerplate.h"
+#include <dds/DCPS/Marked_Default_Qos.h>
+#include <dds/DCPS/Service_Participant.h>
+
+namespace examples { namespace boilerplate {
+
+DDS::DomainParticipant_var
+createParticipant(DDS::DomainParticipantFactory_var dpf)
+{
+  DDS::DomainParticipant_var participant =
+    dpf->create_participant(42,
+                            PARTICIPANT_QOS_DEFAULT,
+                            0,
+                            OpenDDS::DCPS::DEFAULT_STATUS_MASK);
+
+  if (!participant) {
+    throw std::string("failed to create domain participant");
+  }
+  return participant;
+}
+
+DDS::Topic_var
+createTopic(DDS::DomainParticipant_var participant)
+{
+  Hello::Basic_MessageTypeSupport_var ts =
+    new Hello::Basic_MessageTypeSupportImpl;
+
+  if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
+    throw std::string("failed to register type support");
+  }
+
+  CORBA::String_var type_name = ts->get_type_name();
+  DDS::Topic_var topic =
+    participant->create_topic("basic_message",
+                              type_name,
+                              TOPIC_QOS_DEFAULT,
+                              0,
+                              OpenDDS::DCPS::DEFAULT_STATUS_MASK);
+
+  if (!topic) {
+    throw std::string("failed to create topic");
+  }
+  return topic;
+}
+
+DDS::Publisher_var
+createPublisher(DDS::DomainParticipant_var participant)
+{
+  DDS::Publisher_var publisher =
+    participant->create_publisher(
+        PUBLISHER_QOS_DEFAULT,
+        0,
+        OpenDDS::DCPS::DEFAULT_STATUS_MASK);
+
+  if (!publisher) {
+    throw std::string("failed to create publisher");
+  }
+  return publisher;
+}
+
+DDS::Subscriber_var
+createSubscriber(DDS::DomainParticipant_var participant)
+{
+  DDS::Subscriber_var subscriber =
+      participant->create_subscriber(
+          SUBSCRIBER_QOS_DEFAULT,
+          0,
+          OpenDDS::DCPS::DEFAULT_STATUS_MASK);
+
+  if (!subscriber) {
+    throw std::string("failed to create subscriber");
+  }
+
+  return subscriber;
+}
+
+DDS::DataWriter_var
+createDataWriter(
+  DDS::Publisher_var publisher,
+  DDS::Topic_var topic)
+{
+  DDS::DataWriter_var writer =
+    publisher->create_datawriter(topic,
+                                 DATAWRITER_QOS_DEFAULT,
+                                 0,
+                                 OpenDDS::DCPS::DEFAULT_STATUS_MASK);
+
+  if (!writer) {
+    throw std::string("failed to create data writer");
+  }
+
+  return writer;
+}
+
+DDS::DataReader_var
+createDataReader(
+  DDS::Subscriber_var subscriber,
+  DDS::Topic_var topic,
+  DDS::DataReaderListener_var listener)
+{
+  DDS::DataReader_var reader =
+    subscriber->create_datareader(topic,
+                                  DATAREADER_QOS_DEFAULT,
+                                  listener,
+                                  OpenDDS::DCPS::DEFAULT_STATUS_MASK);
+
+  if (!reader) {
+    throw std::string("failed to create data reader");
+  }
+
+  return reader;
+}
+
+Hello::Basic_MessageDataWriter_var
+narrow(DDS::DataWriter_var writer)
+{
+  Hello::Basic_MessageDataWriter_var message_writer =
+    Hello::Basic_MessageDataWriter::_narrow(writer);
+
+  if (!message_writer) {
+    throw std::string("failed to narrow data writer");
+  }
+
+  return message_writer;
+}
+
+Hello::Basic_MessageDataReader_var
+narrow(DDS::DataReader_var reader)
+{
+  Hello::Basic_MessageDataReader_var message_reader =
+    Hello::Basic_MessageDataReader::_narrow(reader);
+
+  if (!message_reader) {
+    throw std::string("failed to narrow data reader");
+  }
+
+  return message_reader;
+}
+
+Hello::Basic_MessageDataWriter_var
+narrow(DDS::DataWriter_ptr writer)
+{
+  Hello::Basic_MessageDataWriter_var message_writer =
+    Hello::Basic_MessageDataWriter::_narrow(writer);
+
+  if (!message_writer) {
+    throw std::string("failed to narrow data writer");
+  }
+
+  return message_writer;
+}
+
+Hello::Basic_MessageDataReader_var
+narrow(DDS::DataReader_ptr reader)
+{
+  Hello::Basic_MessageDataReader_var message_reader =
+    Hello::Basic_MessageDataReader::_narrow(reader);
+
+  if (!message_reader) {
+    throw std::string("failed to narrow data reader");
+  }
+
+  return message_reader;
+}
+
+void
+cleanup(
+  DDS::DomainParticipant_var participant,
+  DDS::DomainParticipantFactory_var dpf)
+{
+  participant->delete_contained_entities();
+  dpf->delete_participant(participant);
+  TheServiceParticipant->shutdown();
+}
+
+} } // End namespaces
