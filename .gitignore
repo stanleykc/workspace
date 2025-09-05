@@ -3,8 +3,6 @@
 /CLAUDE.md
 /FileSync
 /OpenDDS
+/install
 .DS_Store
 
-# Ignore install directories (generated files)
-install/
-**/install/
