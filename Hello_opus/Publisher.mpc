@@ -1,0 +1,24 @@
+project(BasicMessage_IDL): dcps {
+  idlflags      += -Wb,stub_export_include=BasicMessage_export.h \
+                   -Wb,stub_export_macro=BasicMessage_Export
+  dcps_ts_flags += -Wb,export_macro=BasicMessage_Export
+  dynamicflags  += BASICMESSAGE_BUILD_DLL
+
+  TypeSupport_Files {
+    BasicMessage.idl
+  }
+}
+
+project(BasicMessage_Publisher): dcpsexe_with_tcp {
+
+  exename   = publisher
+  after    += BasicMessage_IDL
+
+  TypeSupport_Files {
+    BasicMessage.idl
+  }
+
+  Source_Files {
+    Publisher.cpp
+  }
+}
