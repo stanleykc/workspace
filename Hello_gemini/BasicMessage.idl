@@ -1,0 +1,6 @@
+module BasicMessage {
+  @topic struct Basic_Message {
+    @key long id;
+    string message;
+  };
+};
