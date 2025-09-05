@@ -88,5 +88,10 @@ massif.out.*
 *TypeSupport*.cpp
 *TypeSupport*.h
 *TypeSupport*.inl
+*TypeSupport.idl
+
+#executables
+publisher
+subscriber
 
 ```
