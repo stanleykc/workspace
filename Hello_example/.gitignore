@@ -1,3 +1,4 @@
+```ignore
 # configure script (not made by MPC)
 /setenv.*
 /host_tools.mwc*
@@ -74,3 +75,18 @@ massif.out.*
 *.log
 *.ior
 /ChangeLog
+
+# IDL compiler generated files (C/S and TypeSupport)
+# Generated C/S implementations and headers (e.g., Basic_MessageC.cpp, Basic_MessageS.h)
+*C.cpp
+*C.h
+*C.inl
+*S.cpp
+*S.h
+*S.inl
+# TypeSupport generated files
+*TypeSupport*.cpp
+*TypeSupport*.h
+*TypeSupport*.inl
+
+```
