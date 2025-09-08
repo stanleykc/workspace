@@ -3,6 +3,7 @@
  *
  * Distributed under the OpenDDS License.
  * See: http://www.opendds.org/license.html
+ * Kevin Stanley
  */
 
 #include "Basic_MessageTypeSupportImpl.h"
